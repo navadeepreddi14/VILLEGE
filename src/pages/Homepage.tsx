@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Upload, Image, Heart } from "lucide-react";
+import { Upload, Image, Heart, MapPin, Users, Mountain } from "lucide-react";
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -14,8 +14,8 @@ const Homepage = () => {
           <div className="mb-6">
             <Heart className="w-16 h-16 text-red-500 mx-auto mb-4 animate-pulse" />
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-amber-900 mb-4 font-serif">
-            Our Village
+          <h1 className="text-4xl md:text-6xl font-bold text-amber-900 mb-4 font-serif">
+            Anantharuyudu Peta
           </h1>
           <p className="text-xl md:text-2xl text-amber-700 mb-2">
             Photo Memories
@@ -30,10 +30,11 @@ const Homepage = () => {
               Welcome to Our Village Story
             </h2>
             <p className="text-lg md:text-xl text-amber-800 leading-relaxed mb-8">
+              నమస్కారం! Welcome to Anantharuyudu Peta's digital memory collection. 
               Share the moments that make our village special. Upload your favorite photos 
               and help us create a beautiful collection of memories that capture the heart 
               and soul of our community. Every picture tells a story, and together we're 
-              writing the story of our home.
+              writing the story of our beloved village.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-amber-700">
               <div className="flex items-center gap-2">
@@ -48,6 +49,62 @@ const Homepage = () => {
                 <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
                 <span>Build Our Story</span>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* About Anantharuyudu Peta Section */}
+        <div className="max-w-6xl mx-auto mb-16 animate-fade-in">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-xl border border-amber-200">
+            <h2 className="text-3xl md:text-4xl font-bold text-amber-900 mb-8 text-center">
+              About Anantharuyudu Peta
+            </h2>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Location */}
+              <div className="text-center">
+                <div className="bg-amber-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <MapPin className="w-8 h-8 text-amber-600" />
+                </div>
+                <h3 className="text-xl font-bold text-amber-900 mb-3">Our Location</h3>
+                <p className="text-amber-700 leading-relaxed">
+                  Nestled in the beautiful Parvathipuram Manyam district, within Seethanagaram Mandal, 
+                  our village is a gem in the heart of Andhra Pradesh, India. Surrounded by lush green 
+                  landscapes and rolling hills.
+                </p>
+              </div>
+
+              {/* Culture */}
+              <div className="text-center">
+                <div className="bg-red-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <Users className="w-8 h-8 text-red-600" />
+                </div>
+                <h3 className="text-xl font-bold text-amber-900 mb-3">Our Culture</h3>
+                <p className="text-amber-700 leading-relaxed">
+                  Rich in Telugu traditions and customs, our village celebrates festivals with great joy. 
+                  From colorful Sankranti kites to vibrant Diwali celebrations, we maintain our cultural 
+                  heritage while embracing modernity.
+                </p>
+              </div>
+
+              {/* Lifestyle */}
+              <div className="text-center">
+                <div className="bg-orange-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <Mountain className="w-8 h-8 text-orange-600" />
+                </div>
+                <h3 className="text-xl font-bold text-amber-900 mb-3">Our Lifestyle</h3>
+                <p className="text-amber-700 leading-relaxed">
+                  A harmonious blend of agriculture and community living defines us. Our farmers work 
+                  the fertile lands while families gather for evening conversations under the banyan tree, 
+                  creating bonds that last generations.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 p-6 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl">
+              <p className="text-center text-amber-800 text-lg italic">
+                "అనంతరాయుడుపేట - Where tradition meets tomorrow, and every sunset brings us closer together."
+              </p>
             </div>
           </div>
         </div>
@@ -98,7 +155,7 @@ const Homepage = () => {
         {/* Footer */}
         <footer className="text-center mt-16 animate-fade-in">
           <p className="text-amber-600 text-sm">
-            Made with ❤️ for our village community
+            Made with ❤️ for Anantharuyudu Peta community
           </p>
         </footer>
       </div>
