@@ -27,6 +27,10 @@ const Upload = () => {
     }
   };
 
+  const triggerFileInput = () => {
+    document.getElementById('image-upload')?.click();
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -105,6 +109,13 @@ const Upload = () => {
                   Choose Your Photo
                 </label>
                 <div className="border-2 border-dashed border-indigo-300 rounded-2xl p-8 text-center hover:border-indigo-400 transition-colors">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                    id="image-upload"
+                  />
                   {preview ? (
                     <div className="space-y-4">
                       <img
@@ -135,25 +146,14 @@ const Upload = () => {
                           PNG, JPG or GIF up to 10MB
                         </p>
                       </div>
-                      <Input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="hidden"
-                        id="image-upload"
-                      />
-                      <label
-                        htmlFor="image-upload"
-                        className="inline-block cursor-pointer"
+                      <Button
+                        type="button"
+                        onClick={triggerFileInput}
+                        className="bg-indigo-500 hover:bg-indigo-600 text-white"
                       >
-                        <Button
-                          type="button"
-                          className="bg-indigo-500 hover:bg-indigo-600 text-white"
-                        >
-                          <UploadIcon className="w-4 h-4 mr-2" />
-                          Select Photo
-                        </Button>
-                      </label>
+                        <UploadIcon className="w-4 h-4 mr-2" />
+                        Select Photo
+                      </Button>
                     </div>
                   )}
                 </div>
