@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Heart, Calendar, User } from "lucide-react";
+import { ArrowLeft, Heart, Calendar, User, X } from "lucide-react";
 
 interface Photo {
   id: number;
@@ -14,6 +14,7 @@ interface Photo {
 const Gallery = () => {
   const navigate = useNavigate();
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   useEffect(() => {
     const savedPhotos = JSON.parse(localStorage.getItem('villagePhotos') || '[]');
@@ -26,6 +27,14 @@ const Gallery = () => {
       month: 'short',
       day: 'numeric'
     });
+  };
+
+  const openModal = (photo: Photo) => {
+    setSelectedPhoto(photo);
+  };
+
+  const closeModal = () => {
+    setSelectedPhoto(null);
   };
 
   return (
@@ -76,8 +85,9 @@ const Gallery = () => {
             {photos.map((photo, index) => (
               <div
                 key={photo.id}
-                className="group bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-teal-200"
+                className="group bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-teal-200 cursor-pointer"
                 style={{ animationDelay: `${index * 100}ms` }}
+                onClick={() => openModal(photo)}
               >
                 {/* Image */}
                 <div className="aspect-square overflow-hidden relative">
@@ -125,6 +135,42 @@ const Gallery = () => {
           </div>
         )}
       </div>
+
+      {/* Photo Modal */}
+      {selectedPhoto && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="relative max-w-4xl max-h-full w-full">
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 z-10 bg-white/20 hover:bg-white/30 text-white rounded-full p-2 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Photo */}
+            <img
+              src={selectedPhoto.image}
+              alt={`Photo by ${selectedPhoto.name}`}
+              className="w-full h-full object-contain rounded-lg"
+            />
+
+            {/* Photo Info */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white p-6 rounded-b-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <User className="w-5 h-5" />
+                  <span className="font-medium text-lg">{selectedPhoto.name}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-5 h-5" />
+                  <span>{formatDate(selectedPhoto.uploadDate)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
