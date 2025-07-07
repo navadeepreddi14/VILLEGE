@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Upload as UploadIcon, Camera, Check } from "lucide-react";
 import { toast } from "sonner";
@@ -11,7 +10,6 @@ const Upload = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
-    description: "",
     image: null as File | null
   });
   const [preview, setPreview] = useState<string | null>(null);
@@ -32,8 +30,8 @@ const Upload = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.description || !formData.image) {
-      toast.error("Please fill in all fields and select an image");
+    if (!formData.name || !formData.image) {
+      toast.error("Please fill in your name and select an image");
       return;
     }
 
@@ -48,7 +46,6 @@ const Upload = () => {
       const newPhoto = {
         id: Date.now(),
         name: formData.name,
-        description: formData.description,
         image: preview,
         uploadDate: new Date().toISOString()
       };
@@ -59,7 +56,7 @@ const Upload = () => {
       toast.success("Photo uploaded successfully!");
       
       // Reset form
-      setFormData({ name: "", description: "", image: null });
+      setFormData({ name: "", image: null });
       setPreview(null);
       
       // Navigate to gallery after short delay
@@ -90,10 +87,10 @@ const Upload = () => {
           </Button>
           <div className="flex-1 text-center">
             <h1 className="text-3xl md:text-4xl font-bold text-indigo-900">
-              Share Your Story
+              Share Your Photo
             </h1>
             <p className="text-indigo-600 mt-2">
-              Upload a photo and tell us about it
+              Upload a photo from our village
             </p>
           </div>
         </header>
@@ -176,23 +173,10 @@ const Upload = () => {
                 />
               </div>
 
-              {/* Description */}
-              <div className="space-y-2">
-                <label className="block text-lg font-semibold text-indigo-900">
-                  Tell Us About This Photo
-                </label>
-                <Textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Share the story behind this photo..."
-                  className="text-lg p-4 border-indigo-200 focus:border-indigo-400 rounded-xl min-h-32 resize-none"
-                />
-              </div>
-
               {/* Submit Button */}
               <Button
                 type="submit"
-                disabled={isUploading || !formData.name || !formData.description || !formData.image}
+                disabled={isUploading || !formData.name || !formData.image}
                 className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white text-lg p-4 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100"
               >
                 {isUploading ? (

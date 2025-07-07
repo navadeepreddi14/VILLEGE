@@ -7,7 +7,6 @@ import { ArrowLeft, Heart, Calendar, User } from "lucide-react";
 interface Photo {
   id: number;
   name: string;
-  description: string;
   image: string;
   uploadDate: string;
 }
@@ -103,11 +102,6 @@ const Gallery = () => {
                       <span>{formatDate(photo.uploadDate)}</span>
                     </div>
                   </div>
-
-                  {/* Description */}
-                  <p className="text-teal-800 leading-relaxed line-clamp-3">
-                    {photo.description}
-                  </p>
 
                   {/* Heart Icon */}
                   <div className="pt-2 border-t border-teal-100">
