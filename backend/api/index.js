@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const Photo = require('./models/photo');
+const Photo = require('../models/photo'); // Adjust the path to your Photo model
 const cors = require('cors');
 const BinData = require('mongodb').Binary; // Import Binary from mongodb package
 
@@ -50,6 +50,10 @@ app.get('/photos', async (req, res) => {
   }
 });
 
+app.get('/', async (req, res) => {
+  res.send('Welcome to the Photo Upload API');
+})
+
 app.post('/upload', async (req, res) => {
 
   const { title, imageUrl } = req.body;
@@ -66,9 +70,6 @@ const imgBuffer = Buffer.from(base64Data, 'base64');
     res.status(500).json({ error: err.message });
   }
 });
+  
 
-
-// Start server
-app.listen(PORT, () => {
-  console.log(` Server started at http://localhost:${PORT}`);
-});
+module.exports = app;
