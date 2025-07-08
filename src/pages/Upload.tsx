@@ -51,7 +51,7 @@ const Upload = () => {
     });
 
     // Send to backend
-    const response = await fetch("http://localhost:8080/upload", {
+    const response = await fetch("https://village-photo-backend.app/upload", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

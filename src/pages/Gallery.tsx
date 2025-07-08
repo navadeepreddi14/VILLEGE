@@ -18,7 +18,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
-        const response = await fetch("http://localhost:8080/photos"); // Use your backend URL
+        const response = await fetch("https://village-photo-backend.app/photos"); // Use your backend URL
         const data = await response.json();
 
         const formattedPhotos: Photo[] = data.map((photo: any) => ({
