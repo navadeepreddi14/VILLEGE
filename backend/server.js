@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const Photo = require('./models/photo');
@@ -13,7 +14,7 @@ app.use(express.json({limit : '50mb'})); // Increase limit for large image uploa
 app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Increase limit for large image uploads
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/photos');
+mongoose.connect(process.env.MONGODBURL);
 
 const db = mongoose.connection;
 
