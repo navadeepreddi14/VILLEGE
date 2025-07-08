@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Heart, Calendar, User, X } from "lucide-react";
 
 interface Photo {
-  id: number;
+  id: string;
   name: string;
   image: string;
   uploadDate: string;
@@ -17,15 +16,32 @@ const Gallery = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   useEffect(() => {
-    const savedPhotos = JSON.parse(localStorage.getItem('villagePhotos') || '[]');
-    setPhotos(savedPhotos);
+    const fetchPhotos = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/photos"); // Use your backend URL
+        const data = await response.json();
+
+        const formattedPhotos: Photo[] = data.map((photo: any) => ({
+          id: photo._id,
+          name: photo.title || "Unknown",
+          image: photo.imageBase64,
+          uploadDate: photo.uploadDate || new Date().toISOString() // adjust if needed
+        }));
+
+        setPhotos(formattedPhotos);
+      } catch (err) {
+        console.error("Failed to fetch photos:", err);
+      }
+    };
+
+    fetchPhotos();
   }, []);
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
     });
   };
 
@@ -43,7 +59,7 @@ const Gallery = () => {
         {/* Header */}
         <header className="flex items-center gap-4 mb-8 animate-fade-in">
           <Button
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             variant="ghost"
             size="sm"
             className="text-teal-600 hover:text-teal-800 hover:bg-teal-100"
@@ -56,7 +72,7 @@ const Gallery = () => {
               Village Memories
             </h1>
             <p className="text-teal-600 mt-2">
-              {photos.length} {photos.length === 1 ? 'photo' : 'photos'} shared by our community
+              {photos.length} {photos.length === 1 ? "photo" : "photos"} shared by our community
             </p>
           </div>
         </header>
@@ -66,14 +82,12 @@ const Gallery = () => {
           <div className="text-center py-16 animate-fade-in">
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto shadow-xl border border-teal-200">
               <Heart className="w-16 h-16 text-teal-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-teal-900 mb-4">
-                No Photos Yet
-              </h3>
+              <h3 className="text-2xl font-bold text-teal-900 mb-4">No Photos Yet</h3>
               <p className="text-teal-600 mb-6">
                 Be the first to share a memory from our village!
               </p>
               <Button
-                onClick={() => navigate('/upload')}
+                onClick={() => navigate("/upload")}
                 className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white"
               >
                 Share First Photo
@@ -101,7 +115,6 @@ const Gallery = () => {
 
                 {/* Content */}
                 <div className="p-6 space-y-4">
-                  {/* Name and Date */}
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2 text-teal-600">
                       <User className="w-4 h-4" />
@@ -112,8 +125,6 @@ const Gallery = () => {
                       <span>{formatDate(photo.uploadDate)}</span>
                     </div>
                   </div>
-
-                  {/* Heart Icon */}
                   <div className="pt-2 border-t border-teal-100">
                     <Heart className="w-5 h-5 text-red-400 group-hover:text-red-500 transition-colors" />
                   </div>
@@ -127,7 +138,7 @@ const Gallery = () => {
         {photos.length > 0 && (
           <div className="text-center mt-12 animate-fade-in">
             <Button
-              onClick={() => navigate('/upload')}
+              onClick={() => navigate("/upload")}
               className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white px-8 py-3 rounded-xl transition-all duration-300 transform hover:scale-105"
             >
               Add Another Photo
@@ -155,7 +166,7 @@ const Gallery = () => {
               className="w-full h-full object-contain rounded-lg"
             />
 
-            {/* Photo Info */}
+            {/* Info */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white p-6 rounded-b-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">

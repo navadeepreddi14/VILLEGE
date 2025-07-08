@@ -1,6 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import villageImage from '@/assets/villegeimg.jpg'
 import { Upload, Image, Heart, MapPin, Users, Mountain } from "lucide-react";
 
 const Homepage = () => {
@@ -23,35 +23,39 @@ const Homepage = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-red-400 mx-auto rounded-full"></div>
         </header>
 
-        {/* Welcome Message */}
-        <div className="max-w-4xl mx-auto text-center mb-16 animate-fade-in">
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-xl border border-amber-200">
-            <h2 className="text-3xl md:text-4xl font-bold text-amber-900 mb-6">
-              Welcome to Our Village Story
-            </h2>
-            <p className="text-lg md:text-xl text-amber-800 leading-relaxed mb-8">
-              నమస్కారం! Welcome to Anantharuyudu Peta's digital memory collection. 
-              Share the moments that make our village special. Upload your favorite photos 
-              and help us create a beautiful collection of memories that capture the heart 
-              and soul of our community. Every picture tells a story, and together we're 
-              writing the story of our beloved village.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 text-amber-700">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
-                <span>Share Your Memories</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-red-400 rounded-full"></div>
-                <span>Celebrate Together</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
-                <span>Build Our Story</span>
-              </div>
-            </div>
-          </div>
-        </div>
+   {/* Welcome Message */}
+<div
+  className="max-w-4xl mx-auto text-center mb-16 animate-fade-in rounded-3xl shadow-xl border border-amber-200"
+  style={{ background: `url(${villageImage})`,backgroundSize : 'cover', backgroundPosition: 'center' }}
+>
+  <div className="rounded-3xl bg-black/40 p-8 md:p-12">
+    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+      Welcome to Our Village Story
+    </h2>
+    <p className="text-lg md:text-xl backdrop-blur-xs text-white leading-relaxed mb-8">
+      నమస్కారం! Welcome to Anantharuyudu Peta's digital memory collection. 
+      Share the moments that make our village special. Upload your favorite photos 
+      and help us create a beautiful collection of memories that capture the heart 
+      and soul of our community. Every picture tells a story, and together we're 
+      writing the story of our beloved village.
+    </p>
+    <div className="flex flex-wrap justify-center gap-4 text-white">
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
+        <span>Share Your Memories</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+        <span>Celebrate Together</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+        <span>Build Our Story</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 
         {/* About Anantharuyudu Peta Section */}
         <div className="max-w-6xl mx-auto mb-16 animate-fade-in">

@@ -31,49 +31,59 @@ const Upload = () => {
     document.getElementById('image-upload')?.click();
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!formData.name || !formData.image) {
+    toast.error("Please fill in your name and select an image");
+    return;
+  }
+
+  setIsUploading(true);
+
+  try {
+    // Convert image to base64
+    const base64 = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(formData.image as File);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+    });
+
+    // Send to backend
+    const response = await fetch("http://localhost:8080/upload", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: formData.name,
+        imageUrl: base64
+      })
+    });
+
+    if (!response.ok) {
+      console.log(response);
+      throw new Error("Upload failed");
+      
+    }
+
+    toast.success("Photo uploaded successfully!");
     
-    if (!formData.name || !formData.image) {
-      toast.error("Please fill in your name and select an image");
-      return;
-    }
+    setFormData({ name: "", image: null });
+    setPreview(null);
 
-    setIsUploading(true);
+    setTimeout(() => {
+      navigate("/gallery");
+    }, 1000);
+  } catch (error) {
+    console.error(error);
+    toast.error("Upload failed. Please try again.",error);
+  } finally {
+    setIsUploading(false);
+  }
+};
 
-    try {
-      // Simulate upload delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // Save to localStorage
-      const existingPhotos = JSON.parse(localStorage.getItem('villagePhotos') || '[]');
-      const newPhoto = {
-        id: Date.now(),
-        name: formData.name,
-        image: preview,
-        uploadDate: new Date().toISOString()
-      };
-      
-      existingPhotos.unshift(newPhoto);
-      localStorage.setItem('villagePhotos', JSON.stringify(existingPhotos));
-
-      toast.success("Photo uploaded successfully!");
-      
-      // Reset form
-      setFormData({ name: "", image: null });
-      setPreview(null);
-      
-      // Navigate to gallery after short delay
-      setTimeout(() => {
-        navigate('/gallery');
-      }, 1000);
-      
-    } catch (error) {
-      toast.error("Upload failed. Please try again.");
-    } finally {
-      setIsUploading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
