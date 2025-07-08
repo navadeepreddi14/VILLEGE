@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Heart, Calendar, User, X } from "lucide-react";
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL
 interface Photo {
   id: string;
   name: string;
@@ -18,7 +18,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
-        const response = await fetch("https://village-photo-backend.app/photos"); // Use your backend URL
+        const response = await fetch(backendUrl+"/photos"); // Use your backend URL
         const data = await response.json();
 
         const formattedPhotos: Photo[] = data.map((photo: any) => ({

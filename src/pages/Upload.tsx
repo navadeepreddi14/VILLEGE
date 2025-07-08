@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Upload as UploadIcon, Camera, Check } from "lucide-react";
 import { toast } from "sonner";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://village-photo-backend.app";
+
 const Upload = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -51,7 +53,7 @@ const Upload = () => {
     });
 
     // Send to backend
-    const response = await fetch("https://village-photo-backend.app/upload", {
+    const response = await fetch(backendUrl + "/upload", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
